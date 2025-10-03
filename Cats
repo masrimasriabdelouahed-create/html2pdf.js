@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gentle Companion: Complete Guide to Cat Care</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #4a6572;
+            --secondary-color: #f9aa33;
+            --accent-color: #344955;
+            --light-color: #f5f7fa;
+            --dark-color: #232f34;
+            --text-color: #333;
+            --text-light: #777;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        .dark-mode {
+            --primary-color: #5d7a8c;
+            --secondary-color: #ffb74d;
+            --accent-color: #455a64;
+            --light-color: #1a1a1a;
+            --dark-color: #f5f7fa;
+            --text-color: #e0e0e0;
+            --text-light: #aaaaaa;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            font-family: 'Open Sans', sans-serif;
+            transition: var(--transition);
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Merriweather', serif;
+            color: var(--primary-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.1"><path d="M30,40 C25,30 35,20 45,30 C55,40 65,30 70,40 C75,50 65,60 55,50 C45,40 35,50 30,40 Z" fill="white"/><path d="M15,25 C10,15 20,5 30,15 C40,25 50,15 55,25 C60,35 50,45 40,35 C30,25 20,35 15,25 Z" fill="white"/><path d="M80,60 C75,50 85,40 95,50 C105,60 115,50 120,60 C125,70 115,80 105,70 C95,60 85,70 80,60 Z" fill="white"/></svg>');
+            background-size: 200px;
+            opacity: 0.1;
+        }
+        
+        .book-title {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .book-subtitle {
+            font-size: 1.3rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+        }
+        
+        .author {
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            padding: 1rem 2rem;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: var(--light-color);
+        }
+        
+        .theme-toggle, .pdf-download {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+        
+        .theme-toggle:hover, .pdf-download:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary-color);
+            background-color: rgba(249, 170, 51, 0.1);
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 5px;
+            background-color: #f1f1f1;
+            position: sticky;
+            top: 68px;
+            z-index: 99;
+        }
+        
+        .progress-bar {
+            height: 5px;
+            background-color: var(--secondary-color);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        main {
+            padding: 3rem 0;
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .table-of-contents {
+            flex: 0 0 280px;
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+            background-color: var(--light-color);
+        }
+        
+        .toc-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .toc-list {
+            list-style: none;
+        }
+        
+        .toc-list li {
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .toc-list a {
+            text-decoration: none;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+        
+        .toc-list a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .content {
+            flex: 1;
+        }
+        
+        .chapter {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            background-color: var(--light-color);
+        }
+        
+        .chapter:hover {
+            transform: translateY(-5px);
+        }
+        
+        .chapter-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+        
+        .chapter-number {
+            background-color: var(--secondary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-right: 1rem;
+        }
+        
+        .chapter-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+        
+        .chapter-content {
+            font-size: 1.1rem;
+        }
+        
+        .chapter-content h3 {
+            color: var(--accent-color);
+            margin: 1.5rem 0 0.8rem 0;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .chapter-content p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+        
+        .chapter-content ul, .chapter-content ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+        
+        .chapter-content li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight-box {
+            background-color: rgba(249, 170, 51, 0.1);
+            border-left: 4px solid var(--secondary-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .info-graphic {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(74, 101, 114, 0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+        
+        .info-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            flex: 0 0 60px;
+        }
+        
+        .info-content {
+            flex: 1;
+        }
+        
+        .continue-reading {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px dashed #ddd;
+        }
+        
+        .continue-btn {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: var(--transition);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: fit-content;
+            margin: 0 auto;
+        }
+        
+        .continue-btn:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        @media (max-width: 968px) {
+            main {
+                flex-direction: column;
+            }
+            
+            .table-of-contents {
+                position: static;
+                margin-bottom: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .book-title {
+                font-size: 2rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .chapter {
+                padding: 1.5rem;
+            }
+            
+            .chapter-title {
+                font-size: 1.5rem;
+            }
+        }
+        
+        /* Animation for chapter appearance */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .chapter {
+            animation: fadeInUp 0.8s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="book-title">The Gentle Companion 🐱</h1>
+            <p class="book-subtitle">Complete Guide to Raising a Happy and Healthy Cat</p>
+            <p class="author">By: Feline Care Expert</p>
+        </div>
+    </header>
+    
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
+    <div class="controls">
+        <button class="theme-toggle" id="themeToggle">
+            <i class="fas fa-moon"></i> Dark Mode
+        </button>
+        
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#chapter1">Chapter 1</a></li>
+                <li><a href="#chapter2">Chapter 2</a></li>
+                <li><a href="#chapter3">Chapter 3</a></li>
+                <li><a href="#chapter4">Chapter 4</a></li>
+                <li><a href="#chapter5">Chapter 5</a></li>
+                <li><a href="#chapter6">Chapter 6</a></li>
+                <li><a href="#chapter7">Chapter 7</a></li>
+            </ul>
+        </nav>
+        
+        <button class="pdf-download" id="pdfDownload">
+            <i class="fas fa-download"></i> Download PDF
+        </button>
+    </div>
+    
+    <main class="container">
+        <aside class="table-of-contents">
+            <h2 class="toc-title"><i class="fas fa-bookmark"></i> Table of Contents</h2>
+            <ul class="toc-list">
+                <li><a href="#chapter1"><i class="fas fa-paw"></i> Chapter 1: Preparing for a New Companion</a></li>
+                <li><a href="#chapter2"><i class="fas fa-heartbeat"></i> Chapter 2: Health & Safety Foundations</a></li>
+                <li><a href="#chapter3"><i class="fas fa-comments"></i> Chapter 3: Understanding Cat Behavior</a></li>
+                <li><a href="#chapter4"><i class="fas fa-gamepad"></i> Chapter 4: Enrichment & Play</a></li>
+                <li><a href="#chapter5"><i class="fas fa-home"></i> Chapter 5: Multi-Cat Households</a></li>
+                <li><a href="#chapter6"><i class="fas fa-stethoscope"></i> Chapter 6: Senior Cat Care</a></li>
+                <li><a href="#chapter7"><i class="fas fa-graduation-cap"></i> Chapter 7: Advanced Feline Care</a></li>
+                <li><a href="#appendix"><i class="fas fa-clipboard-list"></i> Appendix & Resources</a></li>
+            </ul>
+        </aside>
+        
+        <div class="content" id="bookContent">
+            <section id="chapter1" class="chapter">
+                <div class="chapter-header">
+                    <div class="chapter-number">1</div>
+                    <h2 class="chapter-title">Preparing for a New Companion 🏠</h2>
+                </div>
+                
+                <div class="chapter-content">
+                    <p>Welcome to the wonderful journey of cat ownership! If you're reading this book, you're likely about to adopt a new friend or considering it. Congratulations on this exciting step! Raising a cat is a rewarding experience that will add immense joy to your life.</p>
+                    
+                    <h3><i class="fas fa-cat"></i> Choosing the Right Companion</h3>
+                    <p>Before beginning your journey with your new cat, it's important to choose the right partner for your circumstances and lifestyle. Let's explore the options together:</p>
+                    
+                    <div class="info-graphic">
+                        <div class="info-icon">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Kitten vs. Adult Cat</h4>
+                            <p>Kittens require more time and effort for training and care, but they grow with you and adapt to your environment. Adult cats usually have established personalities, making it easier to know their temperament.</p>
+                        </div>
+                    </div>
+                    
+                    <ul>
+                        <li><strong>Male or Female?</strong> In reality, there's not much difference in personality between males and females after neutering. Individual differences between cats are more important than gender differences.</li>
+                        <li><strong>Purebred or Mixed Breed?</strong> Purebred cats often have predictable traits, but they may be more prone to genetic health issues. Mixed breed cats are often more robust and resilient, and you save a life when you adopt one.</li>
+                    </ul>
+                    
+                    <div class="highlight-box">
+                        <p><strong>Expert Tip:</strong> Visit your local cat shelter and talk to volunteers about available cats. They often know the cats' personalities well and can help you find the right cat for you.</p>
+                    </div>
+                    
+                    <h3><i class="fas fa-shopping-cart"></i> Essential Supplies Checklist</h3>
+                    <p>To ensure a smooth transition for your new cat to your home, you need to prepare some essential supplies before their arrival:</p>
+                    
+                    <ol>
+                        <li><strong>High-Quality Food:</strong> Choose cat food that contains high levels of animal protein. Avoid cheap foods that contain lots of fillers.</li>
+                        <li><strong>Suitable Bowls:</strong> Use stainless steel or ceramic bowls instead of plastic, as they are healthier and easier to clean.</li>
+                        <li><strong>Litter Box:</strong> Choose a box large enough for your cat, and consider the "one box per cat, plus one extra" rule. Place it in a quiet, easily accessible location.</li>
+                        <li><strong>Carrier:</strong> Invest in a well-ventilated, sturdy carrier. Make it familiar to your cat by leaving it open in the house with a comfortable blanket inside.</li>
+                    </ol>
+                    
+                    <div class="continue-reading">
+                        <p>Now that you're prepared to welcome your new companion, it's time to delve into the basics of health and safety.</p>
+                        <a href="#chapter2" class="continue-btn">Continue to Chapter 2 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="chapter2" class="chapter">
+                <div class="chapter-header">
+                    <div class="chapter-number">2</div>
+                    <h2 class="chapter-title">Health & Safety Foundations 🩺</h2>
+                </div>
+                
+                <div class="chapter-content">
+                    <p>Welcome back! In this chapter, we'll explore together how to maintain your cat's health and safety. Remember that a healthy cat is a happy cat, and their health care is not just a responsibility, but an expression of your love and care for them.</p>
+                    
+                    <h3><i class="fas fa-utensils"></i> Balanced Nutrition: Foundation of Health</h3>
+                    <p>Proper nutrition is the cornerstone of your cat's health and longevity. Let's delve into the details of balanced nutrition:</p>
+                    
+                    <div class="info-graphic">
+                        <div class="info-icon">
+                            <i class="fas fa-apple-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Nutritional Requirements</h4>
+                            <p>Cats are obligate carnivores, meaning they need a diet rich in animal protein. Protein should make up 30-40% of their diet, while fats should be 15-20%.</p>
+                        </div>
+                    </div>
+                    
+                    <ul>
+                        <li><strong>Dry Food vs. Wet Food:</strong> Dry food is convenient and helps maintain dental health, but may not provide adequate hydration. Wet food provides necessary hydration and is often more appealing to cats, but it's more expensive.</li>
+                        <li><strong>Feeding Schedule:</strong> Kittens (up to 6 months) need 3-4 meals daily. Adult cats (1-7 years) need two meals daily. Senior cats (7+ years) may need smaller, more frequent meals.</li>
+                        <li><strong>Forbidden Foods:</strong> Chocolate, onions, garlic, grapes, raisins, caffeine, alcohol, and foods sweetened with xylitol are all toxic to cats.</li>
+                    </ul>
+                    
+                    <div class="highlight-box">
+                        <p><strong>Exclusive Information:</strong> Did you know that cats can't taste sweetness? This is due to a genetic mutation that eliminated their sweet taste receptors. So don't be surprised if your cat shows no interest in sweets!</p>
+                    </div>
+                    
+                    <h3><i class="fas fa-shield-alt"></i> Preventive Veterinary Care: Investment in the Future</h3>
+                    <p>Prevention is better than cure, and this saying applies perfectly to cat care:</p>
+                    
+                    <ol>
+                        <li><strong>First Veterinary Visit:</strong> Take your cat to the vet within the first week of arrival. The vet will perform a comprehensive examination, conduct tests for common diseases, and administer initial vaccinations.</li>
+                        <li><strong>Vaccination Schedule:</strong> Core vaccines include rabies and feline distemper. Optional vaccines depend on your cat's lifestyle (indoor or outdoor).</li>
+                        <li><strong>Parasite Control:</strong> Use regular treatments for fleas, ticks, and worms. Consult your veterinarian to find the right product for your cat.</li>
+                        <li><strong>Spaying/Neutering:</strong> Spaying is not just a means of preventing unwanted reproduction; it has significant health and behavioral benefits, including reducing the risk of certain cancers and limiting unwanted behaviors.</li>
+                    </ol>
+                    
+                    <div class="continue-reading">
+                        <p>Now that you've learned the basics of keeping your cat healthy, it's time to understand their language and behavior.</p>
+                        <a href="#chapter3" class="continue-btn">Continue to Chapter 3 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="chapter3" class="chapter">
+                <div class="chapter-header">
+                    <div class="chapter-number">3</div>
+                    <h2 class="chapter-title">Understanding Cat Behavior 🧠</h2>
+                </div>
+                
+                <div class="chapter-content">
+                    <p>Welcome back! In this fascinating chapter, we'll dive into the world of cat language and behavior. Understanding how your cat communicates with you will deepen your relationship and make coexistence smoother and more enjoyable.</p>
+                    
+                    <h3><i class="fas fa-sign-language"></i> Understanding Body Language: Reading Between Movements</h3>
+                    <p>Cats communicate primarily through body language. Here are some common signals and their meanings:</p>
+                    
+                    <div class="info-graphic">
+                        <div class="info-icon">
+                            <i class="fas fa-tail"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Tail Positions</h4>
+                            <p>A raised tail means a happy greeting, while a puffed-up tail indicates fear or aggression. A twitching tail tip often signals excitement or irritation.</p>
+                        </div>
+                    </div>
+                    
+                    <ul>
+                        <li><strong>Raised Tail:</strong> When your cat approaches you with its tail raised straight up, this is a friendly greeting meaning "I'm happy to see you!"</li>
+                        <li><strong>Flattened Ears:</strong> Ears flattened against the head indicate fear, anxiety, or aggression. It's best to give your cat space when you see this signal.</li>
+                        <li><strong>Exposed Belly:</strong> Contrary to popular belief, an exposed belly is not always an invitation for petting. It often indicates trust, but many cats don't like belly rubs.</li>
+                        <li><strong>Kneading:</strong> When your cat presses its paws alternately against you or a soft surface, it's a comforting behavior from kittenhood that indicates contentment.</li>
+                    </ul>
+                    
+                    <div class="highlight-box">
+                        <p><strong>Behavior Insight:</strong> Slow blinking is a cat's way of showing trust and affection. Try slowly blinking at your cat - you might be surprised when they return the gesture!</p>
+                    </div>
+                    
+                    <h3><i class="fas fa-graduation-cap"></i> Positive Training: Building Good Habits</h3>
+                    <p>Contrary to popular belief, cats can be trained using positive reinforcement techniques:</p>
+                    
+                    <ol>
+                        <li><strong>Scrching Post Training:</strong> Place the scratching post near your cat's favorite resting areas. Encourage use by rubbing catnip on it and praising your cat when they use it.</li>
+                        <li><strong>Teaching Basic Commands:</strong> Start with simple commands like "come" using treats as rewards. Keep training sessions short (5-10 minutes) and always end on a positive note.</li>
+                        <li><strong>Litter Box Training:</strong> Most cats instinctively use litter boxes. Ensure the box is clean, in a quiet location, and large enough for your cat to move comfortably.</li>
+                        <li><strong>Using Rewards Effectively:</strong> Use small, high-value treats for training. Timing is crucial - reward immediately after the desired behavior.</li>
+                    </ol>
+                    
+                    <div class="continue-reading">
+                        <p>Now that you understand your cat's language, it's time to explore how to enrich their environment.</p>
+                        <a href="#chapter4" class="continue-btn">Continue to Chapter 4 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="chapter4" class="chapter">
+                <div class="chapter-header">
+                    <div class="chapter-number">4</div>
+                    <h2 class="chapter-title">Enrichment & Play 🎮</h2>
+                </div>
+                
+                <div class="chapter-content">
+                    <p>Welcome to the fun part! In this chapter, we'll explore how to create a stimulating environment that keeps your cat mentally and physically healthy. Environmental enrichment is key to preventing behavior problems and ensuring your cat's wellbeing.</p>
+                    
+                    <h3><i class="fas fa-gamepad"></i> The Importance of Play: Simulated Hunting</h3>
+                    <p>Play is not just entertainment for cats - it's essential for their physical and mental health:</p>
+                    
+                    <div class="info-graphic">
+                        <div class="info-icon">
+                            <i class="fas fa-feather"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Play as Instinct</h4>
+                            <p>For cats, play mimics hunting behavior. Regular play sessions help satisfy their natural instincts and prevent boredom-related issues.</p>
+                        </div>
+                    </div>
+                    
+                    <ul>
+                        <li><strong>Types of Play:</strong> Include a variety of play types - chasing, pouncing, batting, and wrestling with appropriate toys.</li>
+                        <li><strong>Daily Play Sessions:</strong> Aim for at least two 15-minute play sessions daily. Adjust based on your cat's age and energy level.</li>
+                        <li><strong>Reading Your Cat's Mood:</strong> Learn to recognize when your cat wants to play (alert posture, twitching tail) and when they've had enough (walking away, lying down).</li>
+                        <li><strong>Rotating Toys:</strong> Keep your cat interested by rotating toys rather than leaving them all out at once.</li>
+                    </ul>
+                    
+                    <div class="highlight-box">
+                        <p><strong>Play Tip:</strong> End play sessions with a "catch" - let your cat successfully "capture" the toy, then offer a small treat. This satisfies their hunting sequence and prevents frustration.</p>
+                    </div>
+                    
+                    <h3><i class="fas fa-puzzle-piece"></i> Creating a Stimulating Environment</h3>
+                    <p>Beyond toys, your cat's entire environment should provide mental and physical stimulation:</p>
+                    
+                    <ol>
+                        <li><strong>Vertical Space:</strong> Cats feel secure when they can survey their territory from above. Provide cat trees, shelves, or window perches.</li>
+                        <li><strong>Hiding Places:</strong> Cardboard boxes, paper bags, and dedicated hiding spots give your cat security and enrichment.</li>
+                        <li><strong>Visual Stimulation:</strong> Place bird feeders outside windows or provide cat-friendly videos designed for feline entertainment.</li>
+                        <li><strong>Food Puzzles:</strong> Use puzzle feeders to make mealtime more engaging and slow down fast eaters.</li>
+                    </ol>
+                    
+                    <div class="continue-reading">
+                        <p>Now that you know how to enrich your cat's environment, let's explore living with multiple cats.</p>
+                        <a href="#chapter5" class="continue-btn">Continue to Chapter 5 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="chapter5" class="chapter">
+                <div class="chapter-header">
+                    <div class="chapter-number">5</div>
+                    <h2 class="chapter-title">Multi-Cat Households 👥</h2>
+                </div>
+                
+                <div class="chapter-content">
+                    <p>Welcome to the complex world of multi-cat dynamics! Whether you're considering adding another cat to your family or already live with multiple felines, this chapter will help you create harmony in your feline family.</p>
+                    
+                    <h3><i class="fas fa-handshake"></i> Introducing a New Cat: The Slow Method</h3>
+                    <p>Proper introductions are crucial for establishing positive relationships between cats:</p>
+                    
+                    <div class="info-graphic">
+                        <div class="info-icon">
+                            <i class="fas fa-door-open"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Separation Phase</h4>
+                            <p>Keep the new cat in a separate room with all necessities for at least a week. This allows cats to get used to each other's scent without direct contact.</p>
+                        </div>
+                    </div>
+                    
+                    <ul>
+                        <li><strong>Scent Swapping:</strong> Exchange bedding between cats daily so they become familiar with each other's scent.</li>
+                        <li><strong>Feeding Protocol:</strong> Feed cats on opposite sides of the same door, gradually moving bowls closer as they become comfortable.</li>
+                        <li><strong>Controlled Visual Contact:</strong> Use a baby gate or cracked door for brief, supervised visual introductions.</li>
+                        <li><strong>First Full Introduction:</strong> Keep initial meetings short and positive, with plenty of treats and distractions. Be prepared to separate if signs of stress or aggression appear.</li>
+                    </ul>
+                    
+                    <div class="highlight-box">
+                        <p><strong>Expert Advice:</strong> The introduction process can take anywhere from a few weeks to several months. Rushing this process is the most common mistake in multi-cat households.</p>
+                    </div>
+                    
+                    <h3><i class="fas fa-peace"></i> Maintaining Harmony: Resources and Space</h3>
+                    <p>Preventing competition over resources is key to peaceful cohabitation:</p>
+                    
+                    <ol>
+                        <li><strong>Multiple Resources:</strong> Provide separate food bowls, water stations, litter boxes, and resting areas for each cat.</li>
+                        <li><strong>Strategic Placement:</strong> Place resources in different areas to prevent one cat from blocking access to all resources.</li>
+                        <li><strong>Vertical Territory:</strong> Create multiple vertical spaces and hiding spots so cats can avoid each other when desired.</li>
+                        <li><strong>Individual Attention:</strong> Spend quality one-on-one time with each cat daily to prevent jealousy and strengthen your bond.</li>
+                    </ol>
+                    
+                    <div class="continue-reading">
+                        <p>Now that you understand multi-cat dynamics, let's explore the special needs of senior cats.</p>
+                        <a href="#chapter6" class="continue-btn">Continue to Chapter 6 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="chapter6" class="chapter">
+                <div class="chapter-header">
+                    <div class="chapter-number">6</div>
+                    <h2 class="chapter-title">Senior Cat Care 👵🐱</h2>
+                </div>
+                
+                <div class="chapter-content">
+                    <p>Welcome to this important chapter on caring for our beloved senior feline companions. As cats age, their needs change, and understanding these changes is crucial to ensuring their golden years are comfortable and happy.</p>
+                    
+                    <h3><i class="fas fa-clock"></i> Understanding the Aging Process</h3>
+                    <p>Cats are generally considered seniors at around 7-10 years old, but this varies by individual and breed:</p>
+                    
+                    <div class="info-graphic">
+                        <div class="info-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Cognitive Changes</h4>
+                            <p>Some senior cats may experience cognitive decline similar to dementia in humans. Signs include disorientation, changes in sleep patterns, and altered interactions.</p>
+                        </div>
+                    </div>
+                    
+                    <ul>
+                        <li><strong>Physical Changes:</strong> Senior cats may experience reduced mobility, weight changes, dental issues, and decreased sensory abilities.</li>
+                        <li><strong>Medical Conditions:</strong> Common age-related conditions include arthritis, kidney disease, hyperthyroidism, and diabetes.</li>
+                        <li><strong>Behavioral Changes:</strong> Increased vocalization, changes in litter box habits, and altered sleep-wake cycles are common in senior cats.</li>
+                        <li><strong>Veterinary Care:</strong> Senior cats should have veterinary check-ups every six months instead of annually to catch issues early.</li>
+                    </ul>
+                    
+                    <div class="highlight-box">
+                        <p><strong>Comfort Tip:</strong> Provide orthopedic beds with extra padding to support aging joints. Heated beds can be especially comforting for cats with arthritis.</p>
+                    </div>
+                    
+                    <h3><i class="fas fa-home-heart"></i> Adapting Your Home for Senior Needs</h3>
+                    <p>Simple modifications can make your home more comfortable and accessible for your senior cat:</p>
+                    
+                    <ol>
+                        <li><strong>Accessibility:</strong> Provide steps or ramps to help your cat reach favorite elevated spots without jumping.</li>
+                        <li><strong>Litter Box Modifications:</strong> Use low-sided litter boxes for easy entry, and place them in easily accessible locations.</li>
+                        <li><strong>Food and Water Stations:</strong> Elevate food and water bowls to reduce strain on neck and joints while eating.</li>
+                        <li><strong>Environmental Consistency:</strong> Avoid rearranging furniture frequently, as senior cats may become disoriented by changes to their familiar environment.</li>
+                    </ol>
+                    
+                    <div class="continue-reading">
+                        <p>Now that you understand senior cat care, let's explore advanced feline care techniques.</p>
+                        <a href="#chapter7" class="continue-btn">Continue to Chapter 7 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="chapter7" class="chapter">
+                <div class="chapter-header">
+                    <div class="chapter-number">7</div>
+                    <h2 class="chapter-title">Advanced Feline Care 🧪</h2>
+                </div>
+                
+                <div class="chapter-content">
+                    <p>Welcome to our final chapter, where we explore advanced care techniques and specialized knowledge for dedicated cat guardians. This information will help you provide exceptional care throughout your cat's life.</p>
+                    
+                    <h3><i class="fas fa-teeth"></i> Dental Health: Beyond the Basics</h3>
+                    <p>Dental health is crucial to your cat's overall wellbeing, affecting much more than just their mouth:</p>
+                    
+                    <div class="info-graphic">
+                        <div class="info-icon">
+                            <i class="fas fa-tooth"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Dental Disease Impact</h4>
+                            <p>Periodontal disease can lead to bacteria entering the bloodstream, potentially affecting the heart, kidneys, and liver.</p>
+                        </div>
+                    </div>
+                    
+                    <ul>
+                        <li><strong>Home Dental Care:</strong> Regular tooth brushing with cat-specific toothpaste is the gold standard for dental care.</li>
+                        <li><strong>Dental Diets:</strong> Special dental kibble with a larger size and specific texture can help reduce tartar buildup.</li>
+                        <li><strong>Dental Treats and Toys:</strong> Certain treats and chew toys are designed to promote dental health through mechanical action.</li>
+                        <li><strong>Professional Cleanings:</strong> Regular veterinary dental cleanings under anesthesia are necessary to address issues below the gumline.</li>
+                    </ul>
+                    
+                    <div class="highlight-box">
+                        <p><strong>Advanced Tip:</strong> Introduce dental care gradually. Start by letting your cat taste the toothpaste, then progress to touching their lips, and finally to brief brushing sessions.</p>
+                    </div>
+                    
+                    <h3><i class="fas fa-heart"></i> Holistic and Complementary Care</h3>
+                    <p>Many cat owners are exploring complementary approaches to enhance their cat's health and wellbeing:</p>
+                    
+                    <ol>
+                        <li><strong>Acupuncture:</strong> Used for pain management, particularly for arthritis and neurological conditions.</li>
+                        <li><strong>Physical Therapy:</strong> Includes exercises, massage, and hydrotherapy to improve mobility and manage pain.</li>
+                        <li><strong>Herbal Medicine:</strong> Certain herbs can support various body systems, but should only be used under veterinary guidance.</li>
+                        <li><strong>Stress Reduction Techniques:</strong> Pheromone diffusers, calming music, and structured routines can reduce anxiety in sensitive cats.</li>
+                    </ol>
+                    
+                    <div class="continue-reading">
+                        <p>Congratulations on completing the main content! Explore the appendix for additional resources.</p>
+                        <a href="#appendix" class="continue-btn">View Appendix <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="appendix" class="chapter">
+                <div class="chapter-header">
+                    <div class="chapter-number"><i class="fas fa-clipboard-list"></i></div>
+                    <h2 class="chapter-title">Appendix & Resources</h2>
+                </div>
+                
+                <div class="chapter-content">
+                    <h3><i class="fas fa-first-aid"></i> Emergency Preparedness</h3>
+                    <p>Every cat owner should be prepared for emergencies. Create an emergency kit containing:</p>
+                    
+                    <ul>
+                        <li>3-7 days of food and water</li>
+                        <li>Copies of medical records and a recent photo of your cat</li>
+                        <li>Extra collar with ID tags</li>
+                        <li>Basic first aid supplies</li>
+                        <li>Favorite toys or comfort items</li>
+                        <li>List of emergency contacts including your veterinarian</li>
+                    </ul>
+                    
+                    <h3><i class="fas fa-book-medical"></i> Recommended Reading</h3>
+                    <p>Expand your knowledge with these excellent resources:</p>
+                    
+                    <ol>
+                        <li>"Think Like a Cat" by Pam Johnson-Bennett</li>
+                        <li>"The Cat Behavior Answer Book" by Arden Moore</li>
+                        <li>"Your Cat: Simple New Secrets to a Longer, Stronger Life" by Elizabeth M. Hodgkins</li>
+                        <li>"The Natural Cat" by Anitra Frazier</li>
+                    </ol>
+                    
+                    <div class="highlight-box">
+                        <p><strong>Final Thought:</strong> Remember that every cat is an individual with unique preferences and personality traits. The most important skill you can develop as a cat guardian is observation - pay attention to your cat's signals, and they will teach you what they need.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2023 The Gentle Companion: Complete Guide to Cat Care. All rights reserved.</p>
+                <p>This book is dedicated to all the feline companions who enrich our lives with their unique personalities and unconditional love.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.className = 'fas fa-sun';
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+            } else {
+                themeIcon.className = 'fas fa-moon';
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i> Dark Mode';
+            }
+        });
+        
+        // Progress Bar
+        window.addEventListener('scroll', () => {
+            const winHeight = window.innerHeight;
+            const docHeight = document.documentElement.scrollHeight;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollPercent = (scrollTop / (docHeight - winHeight)) * 100;
+            document.getElementById('progressBar').style.width = scrollPercent + '%';
+        });
+        
+        // PDF Download
+        document.getElementById('pdfDownload').addEventListener('click', () => {
+            const element = document.getElementById('bookContent');
+            const options = {
+                margin: 1,
+                filename: 'The_Gentle_Companion_Cat_Care_Guide.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+            
+            html2pdf().set(options).from(element).save();
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
